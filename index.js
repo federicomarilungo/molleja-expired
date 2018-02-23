@@ -1,3 +1,8 @@
+/* NOMBRE DE ARCHIVO --- INDEX.JS
+AUTOR --- MARILUNGO FEDERICO
+FECHA --- 23/02/2018
+*/
+
 //Require de módulos (importación de módulos)
 
 var server = require("./server");
