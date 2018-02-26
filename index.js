@@ -16,6 +16,7 @@ handle["/"] = requestHandlers.iniciar;
 handle["/iniciar"] = requestHandlers.iniciar;
 handle["/subir"] = requestHandlers.subir;
 handle["/login"] = requestHandlers.login;
+handle["/json"] = requestHandlers.json;
 
 server.iniciar(router.route, handle);
 //a la función iniciar del módulo server le paso como parámetro la función route del módulo router.
