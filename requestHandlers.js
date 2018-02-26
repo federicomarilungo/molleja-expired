@@ -1,25 +1,13 @@
 var querystring = require("querystring");
+var fs = require("fs");
 
 function iniciar(response, postData) {
   console.log("Manipulador de peticiones 'iniciar' fue llamado.");
-  var body = '<html>'+
-  '<head>'+
-  '<meta http‐equiv="Content‐Type" content="text/html; charset=UTF‐8" />'+
-  '</head>'+
-  '<body>'+
-  '<form action="/subir" method="post">'+
-  '<textarea name="text" rows="20" cols="60"></textarea>'+
-  '<input type="submit" value="Enviar texto" />'+
-  '</form>'+
-  '<form action="/login" method="post">'+
-  '<textarea name="text" rows="20" cols="60"></textarea>'+
-  '<input type="submit" value="Enviar texto" />'+
-  '</form>'+
-  '</body>'+
-  '</html>';
-  response.writeHead(200);
-  response.write(body);
-  response.end();
+  fs.readFile("./index.html",function(err,html){
+    response.writeHead(200);
+    response.write(html);
+    response.end();
+  });
 }
 
 function subir(response, postData) {
@@ -31,10 +19,12 @@ function subir(response, postData) {
 }
 
 function login(response, postData) {
-  console.log("Manipulador de petición 'subir' fue llamado.");
-  response.writeHead(200);
-  response.write("Te estas intentando logear con: " + querystring.parse(postData)["text"]);;
-  response.end();
+  console.log("Manipulador de peticiones 'iniciar' fue llamado.");
+  fs.readFile("./login.html",function(err,html){
+    response.writeHead(200);
+    response.write(html);
+    response.end();
+  });
 }
 
 exports.iniciar = iniciar;
