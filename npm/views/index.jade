@@ -1,8 +1,7 @@
-html
-  head
-    tittle Mi primer
-  body
+extends ./layout.jade
+block contenido
     h1 fede !{variable}
     - var arreglo = [1,2,3,4,5];
     - for (var i=arreglo.length - 1; i>=0; i--)
       p=arreglo[i]
+      button(type="submit", class="btn btn-danger") Pepe
