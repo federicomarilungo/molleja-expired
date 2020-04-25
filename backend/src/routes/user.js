@@ -23,7 +23,7 @@ router.post('/bier', (req, res) => {
   });
 
 router.get('/bier', (req, res) => {
-    console.log("Ingresaste en /bier")
+    console.log("Ingresaste en en /bier")
     mysqlConnection.query('SELECT * FROM bier where tipo = '+req.query.tipo, (err, rows, fields) => {
       if(!err) {
         res.json(rows);
