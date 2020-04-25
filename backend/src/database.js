@@ -4,7 +4,7 @@ const mysqlConnection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'monadb'
+  database: 'bierdb'
 });
 
 mysqlConnection.connect(function (err) {
@@ -12,7 +12,7 @@ mysqlConnection.connect(function (err) {
     console.error(err);
     return;
   } else {
-    console.log('db is connected');
+    console.log('bierdb is connected');
   }
 });
 
