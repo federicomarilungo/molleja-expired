@@ -6,25 +6,32 @@ const mysqlConnection  = require('../database.js');
 // INSERT An User
 router.post('/bier', (req, res) => {
 
-    const {user, pass, mail} = req.body;
+    const {code, name, brand, description, tipo, ibu, alcohol, likes, dislikes, img, creation_date, state_code} = req.body;
 
 
-    console.log(user, pass, mail);
-    const query = "INSERT INTO `user` (`user_id`, `user`, `pass`, `mail`, `creation_date`, `state_code`) VALUES (NULL, '"+user+"', '"+pass+"', '"+mail+"', '2020-04-10', '1');"
-    mysqlConnection.query(query, [user, pass, mail], (err, rows, fields) => {
+    console.log(code, name, brand, description, tipo, ibu, alcohol, likes, dislikes, img, creation_date, state_code);
+    const query = "INSERT INTO bier (code, name, brand, description, tipo, ibu, alcohol, likes, dislikes, img, creation_date, state_code) VALUES ('"+code+"', '"+name+"', '"+brand+"','"+description+"','"+tipo+"', '"+ibu+"', '"+alcohol+"', '"+likes+"', '"+dislikes+"', '"+img+"', '"+creation_date+"', '"+state_code+"');"
+    mysqlConnection.query(query, (err, rows, fields) => {
       if(!err) {
-        res.json({status: 'User Saved'});
+        res.json({status: 'bier saved'});
       } else {
         console.log(err);
-        res.json({status: 'Error: User Dont Saved'});
+        res.json({status: 'Error: bier Dont Saved'});
       }
     });
-  
   });
 
 router.get('/bier', (req, res) => {
-    console.log("Ingresaste en en /bier")
-    mysqlConnection.query('SELECT * FROM bier where tipo = '+req.query.tipo, (err, rows, fields) => {
+    console.log("Ingresaste en /bier")
+    let tipo = req.query.name
+    let query = ""
+    if(tipo == null){
+      query = 'SELECT * FROM bier'
+    }
+    else {
+      query = 'SELECT * FROM bier where name = ' + tipo
+    }
+    mysqlConnection.query(query, (err, rows, fields) => {
       if(!err) {
         res.json(rows);
       } else {
