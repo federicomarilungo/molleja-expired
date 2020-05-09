@@ -6,8 +6,13 @@ const mysqlConnection  = require('../database.js');
 // INSERT An User
 router.post('/bier', (req, res) => {
 
-    const {code, name, brand, description, tipo, ibu, alcohol, likes, dislikes, img, creation_date, state_code} = req.body;
+    const {code, name, brand, description, tipo, ibu, alcohol, likes, dislikes, img, state_code} = req.body;
+    
+    var today = new Date();
+    var creation_date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
+    console.log("HOLAAAAAAAAAAAAAAAAAA");
+    console.log(creation_date);
 
     console.log(code, name, brand, description, tipo, ibu, alcohol, likes, dislikes, img, creation_date, state_code);
     const query = "INSERT INTO bier (code, name, brand, description, tipo, ibu, alcohol, likes, dislikes, img, creation_date, state_code) VALUES ('"+code+"', '"+name+"', '"+brand+"','"+description+"','"+tipo+"', '"+ibu+"', '"+alcohol+"', '"+likes+"', '"+dislikes+"', '"+img+"', '"+creation_date+"', '"+state_code+"');"
