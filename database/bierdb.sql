@@ -10,6 +10,8 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
+CREATE DATABASE IF NOT EXISTS `bierdb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `bierdb`;
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -28,7 +30,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `bier` (
-  `Id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `code` int(4) NOT NULL,
   `name` varchar(50) NOT NULL,
   `brand` varchar(50) NOT NULL,
@@ -65,7 +67,7 @@ INSERT INTO `bier` (`Id`, `code`, `name`, `brand`, `description`, `tipo`, `ibu`,
 --
 
 CREATE TABLE `offer` (
-  `id_cerveza` int(4) NOT NULL,
+  `bier_id` int(4) NOT NULL,
   `day` varchar(20) NOT NULL,
   `offer_desc` varchar(50) NOT NULL,
   `biers` int(4) NOT NULL,
@@ -80,14 +82,14 @@ CREATE TABLE `offer` (
 -- Indices de la tabla `bier`
 --
 ALTER TABLE `bier`
-  ADD PRIMARY KEY (`Id`),
-  ADD UNIQUE KEY `Id` (`Id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
 
 --
 -- Indices de la tabla `offer`
 --
 ALTER TABLE `offer`
-  ADD PRIMARY KEY (`id_cerveza`);
+  ADD PRIMARY KEY (`bier_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -97,7 +99,7 @@ ALTER TABLE `offer`
 -- AUTO_INCREMENT de la tabla `bier`
 --
 ALTER TABLE `bier`
-  MODIFY `Id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
