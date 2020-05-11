@@ -38,10 +38,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Bierlife'),
-        backgroundColor: Colors.blueGrey[900],
-      ),
       backgroundColor: Colors.blueGrey[300],
       body: SingleChildScrollView(
         child: Column(
@@ -55,7 +51,7 @@ class HomePage extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     color: Colors.white,
-                    padding: EdgeInsets.all(30),
+                    padding: EdgeInsets.all(15),
                     child: Image(
                       image: NetworkImage(
                           'https://www.stickpng.com/assets/images/580b57fbd9996e24bc43c099.png'),
@@ -529,6 +525,10 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      appBar: AppBar(
+        title: Text('Bierlife'),
+        backgroundColor: Colors.amberAccent,
       ),
     );
   }
