@@ -44,5 +44,55 @@ router.get('/bier', (req, res) => {
       }
     });  
   });
+  router.delete('/bier/:id',(req,res) =>{
+    let id = req.params.id
+    let query = " "
+    
+    if(id == null){
+      Console.log("No existe la cerveza");
+    }
+    else {
+      query = 'DELETE FROM bier where id = ' + id
+    }
+    mysqlConnection.query(query, (err, rows, fields) => {
+      if(!err) {
+        res.json(rows);
+      } else {
+        console.log(err);
+      }
+    });
+  });
+  router.put('/bier/:id', (req, res)=>{
 
+    console.log(req.body)
+    console.log(req.params)
+    console.log(req.session)
+    
+    let sql = `UPDATE bier SET ? WHERE id = ?`
+
+    let params = [
+            req.body, 
+            req.params.id
+            ];
+    
+    mysqlConnection.query(sql, params, function(err,result,fields){
+      let respuesta;
+
+      if (err){
+        respuesta={
+          status: 'error',
+          message: 'Error al modificar la birra',
+          err: err
+        }       
+      }
+      else{
+        respuesta= {
+          status: 'ok',
+          message: 'Los cambios se agregaron',
+        }
+      }
+      res.json(respuesta);
+
+    })
+  });
 module.exports = router;
