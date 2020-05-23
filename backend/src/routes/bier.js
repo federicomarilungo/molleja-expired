@@ -44,5 +44,46 @@ router.get('/bier', (req, res) => {
       }
     });  
   });
-
+  router.delete('/bier/:id',(req,res) =>{
+    console.log("put request");
+    let ide = 0
+    let query = " "
+    if(ide == null){
+      Console.log("No existe la cerveza");
+    }
+    else {
+      query = 'DELETE FROM bier where id = ' + ide
+    }
+    mysqlConnection.query(query, (err, rows, fields) => {
+      if(!err) {
+        res.json(rows);
+      } else {
+        console.log(err);
+      }
+    });
+  });
+  router.put('/bier/:id',(req,res) =>{
+    console.log("delete request");
+    let ide = 0
+    let query = " "
+    let tipo = req.query.name
+    if(ide == null){
+      Console.log("No existe la cerveza");
+    }
+    else {
+      /*este es el formato que acepta sql aunque unicamente esta
+      actualizando un solo campo del registro, tendria que probar
+      si pasandole todos los valores iguales salvo el que se quiera
+      cambiar admite un update, aunque eso requiere que se haga antes
+      de pasar la query*/
+      query = 'UPDATE bier SET name = '+tipo+' where id = ' + ide
+    }
+    mysqlConnection.query(query, (err, rows, fields) => {
+      if(!err) {
+        res.json(rows);
+      } else {
+        console.log(err);
+      }
+    });
+  });
 module.exports = router;
