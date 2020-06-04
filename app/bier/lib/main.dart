@@ -1,66 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:uni_links/uni_links.dart'; // we import unilinks_plugin
-import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'model/BierModel.dart';
 
 void main() {
-  print("HOLAAA");
-  getBier();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: StreamBuilder(
-        stream: getLinksStream(),
-        builder: (context, snapshot) {
-          print('This will be logged');
-          print('And this $context $snapshot');
-          if (snapshot.hasData) {
-            // our app started by configured links
-            var uri = Uri.parse(snapshot.data);
-            var list = uri.queryParametersAll.entries
-                .toList(); // we retrieve all query parameters , tzd://genius-team.com?product_id=1
-
-//            return Text(list.map((f) => f.toString()).join('-'));
-            return Text("HOLAAA");
-            // we just print all //parameters but you can now do whatever you want, for example open //product details page.
-          } else {
-            // our app started normally
-            return HomePage();
-          }
-        },
-      ),
-    );
+    return MaterialApp(home: HomePage());
   }
 }
 
-void getBier() async {
+void getBiers() async {
+  print("Se consulta getBier");
   var client = http.Client();
   try {
-//    var uriResponse = await client.get('http://127.0.0.1:3000/bier');
-    var uriResponse = await client.get('http://www.google.com');
-    print(uriResponse);
-//        body: {'name': 'doodle', 'color': 'blue'});
-//    print(await client.get(uriResponse.bodyFields['uri']));
+    var response = await client.get('http://192.168.43.45:3000/bier');
+    String jsonString = response.body;
+    var tagsJson = jsonDecode(jsonString);
+    List<String> bierList = tagsJson != null ? List.from(tagsJson) : null;
+    print("EEEEEE MI LISTA DE BIRRA $bierList");
   } finally {
     client.close();
   }
 }
 
 class HomePage extends StatelessWidget {
+  var biersArray = [];
+
+  void instanceBiersArray() {
+    biersArray.add(new BierModel());
+    biersArray.add(new BierModel());
+//    await getBiers();
+    print('Todas las birras:');
+  }
+
   @override
   Widget build(BuildContext context) {
+    instanceBiersArray();
     return Scaffold(
       backgroundColor: Colors.blueGrey[300],
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Bier(
-              name: "Apa ramita",
+            BierWidget(
+              bierModel: biersArray[0],
+            ),
+            SizedBox(
+              height: 1,
+            ),
+            BierWidget(
+              bierModel: biersArray[1],
             ),
             SizedBox(
               height: 1,
@@ -76,9 +71,9 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class Bier extends StatelessWidget {
-  final String name;
-  Bier({this.name});
+class BierWidget extends StatelessWidget {
+  final BierModel bierModel;
+  BierWidget({this.bierModel});
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +99,7 @@ class Bier extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    this.name,
+                    bierModel.name,
                     style: TextStyle(
                       fontSize: 27,
                     ),
@@ -162,19 +157,11 @@ class Bier extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    'ALC                4,5%',
+                    'ALC                %${bierModel.alcohol}',
                     style: TextStyle(
                       fontSize: 20,
                     ),
                   ),
-//                  Container(
-//                    height: 30,
-//                    width: 90,
-//                    child: RaisedButton(
-//                      onPressed: _launchURL,
-//                      child: Text('Go'),
-//                    ),
-//                  ),
                 ],
               ),
             ),
@@ -182,14 +169,5 @@ class Bier extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-_launchURL() async {
-  const url = 'https://listado.mercadolibre.com.ar/chromecast#D[A:chromecast]';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
   }
 }
